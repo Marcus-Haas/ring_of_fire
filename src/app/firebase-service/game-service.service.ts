@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, addDoc, collection, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection } from '@angular/fire/firestore';
 import { Game } from '../../models/game';
 import { Router } from '@angular/router';
 
@@ -11,7 +11,7 @@ export class GameService {
 
   firestore: Firestore = inject(Firestore);
   game = new Game();
-  gameId: any = "";
+  gameId: string = "";
 
 
   constructor(private router: Router) { }

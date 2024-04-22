@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { GameService } from '../firebase-service/game-service.service';
 
 @Component({
@@ -14,12 +13,11 @@ import { GameService } from '../firebase-service/game-service.service';
 export class StartScreenComponent {
 
 
-  constructor(private router: Router, private test: GameService) { 
+  constructor(private gameService: GameService) { 
   }
 
   newGame() {
-    this.test.addNewGame();
-    // this.router.navigateByUrl('game/' + this.test.gameId);
+    this.gameService.addNewGame();
   }
 
 }
