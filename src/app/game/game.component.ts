@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Game } from '../../models/game';
 import { PlayerComponent } from '../player/player.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
+import { Firestore, onSnapshot, doc, collectionData, getDoc, addDoc } from '@angular/fire/firestore';
+import { collection } from '@firebase/firestore';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -23,7 +27,7 @@ import { GameInfoComponent } from '../game-info/game-info.component';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    GameInfoComponent
+    GameInfoComponent,
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
@@ -31,20 +35,62 @@ import { GameInfoComponent } from '../game-info/game-info.component';
 
 export class GameComponent implements OnInit {
 
+  // firestore: Firestore = inject(Firestore);
+
   pickCardAnimation = false;
   game: Game = new Game();
   currentCard: string = '';
+  lalala: object = [];
+  id: string = "";
 
-  constructor(public dialog: MatDialog) { }
+
+  // testAddGame() {
+  //   addDoc(collection(this.firestore, "games"), this.game.toJson());
+  // }
+
+
+  // testRead() {
+  //   this.lalala = onSnapshot(collection(this.firestore, "games"), (x) => {
+  //     x.forEach(element => {
+  //       console.log(element.id);
+  //     })
+  //   });
+  // }
+
+  // getSingleDocRef(colId: string, docId: string) {
+  //   return doc(collection(this.firestore, colId), docId);
+  // }
+
+
+
+
+  constructor(public dialog: MatDialog, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.newGame();
+    // this.route.params.subscribe((params) => {
+    //   console.log(params['id']);
+    //   this.id = params['id'];
+    // })
+    // this.testRead();
+    // this.testAddGame();
+    // this.singleGameTest();
   }
 
   newGame() {
     this.game = new Game();
     console.log(this.game);
   }
+
+  // singleGameTest() {
+  //   this.lalala = onSnapshot(this.getSingleDocRef("games", this.id), (element: any) => {
+  //     console.log(element.data());
+  //     this.game.players = element.players;
+  //     this.game.currentPlayer = element.currentPlayer;
+  //     this.game.stack = element.stack;
+  //     this.game.playedCards = element.playedCards;
+  //   });
+  // }
 
   takeCard() {
     if (!this.pickCardAnimation) {
@@ -68,6 +114,7 @@ export class GameComponent implements OnInit {
       }
     });
   }
+
 
 
 }
