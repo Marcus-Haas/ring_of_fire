@@ -65,14 +65,19 @@ export class GameComponent implements OnInit {
 
 
 
-  constructor(public dialog: MatDialog, private gameService: GameService, private route: ActivatedRoute) { }
+  constructor(public dialog: MatDialog, private gameService: GameService, private route: ActivatedRoute) {
+
+  }
 
   ngOnInit(): void {
 
     this.route.params.subscribe((params) => {
       console.log(params['id']);
       this.id = params['id'];
-    })
+    });
+
+    this.gameService.subGame(this.game, this.id);
+
     // this.testRead();
     // this.testAddGame();
     // this.singleGameTest();
