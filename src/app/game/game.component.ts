@@ -12,6 +12,7 @@ import { Firestore, onSnapshot, doc, collectionData, getDoc, addDoc } from '@ang
 import { collection } from '@firebase/firestore';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { GameService } from '../firebase-service/game-service.service';
 
 
 
@@ -37,9 +38,9 @@ export class GameComponent implements OnInit {
 
   // firestore: Firestore = inject(Firestore);
 
-  pickCardAnimation = false;
+
+
   game: Game = new Game();
-  currentCard: string = '';
   lalala: object = [];
   id: string = "";
 
@@ -64,23 +65,23 @@ export class GameComponent implements OnInit {
 
 
 
-  constructor(public dialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(public dialog: MatDialog, private gameService: GameService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.newGame();
-    // this.route.params.subscribe((params) => {
-    //   console.log(params['id']);
-    //   this.id = params['id'];
-    // })
+
+    this.route.params.subscribe((params) => {
+      console.log(params['id']);
+      this.id = params['id'];
+    })
     // this.testRead();
     // this.testAddGame();
     // this.singleGameTest();
   }
 
-  newGame() {
-    this.game = new Game();
-    console.log(this.game);
-  }
+  // newGame() {
+  //   this.game = new Game();
+  //   console.log(this.game);
+  // }
 
   // singleGameTest() {
   //   this.lalala = onSnapshot(this.getSingleDocRef("games", this.id), (element: any) => {
@@ -93,15 +94,15 @@ export class GameComponent implements OnInit {
   // }
 
   takeCard() {
-    if (!this.pickCardAnimation) {
-      this.currentCard = this.game.stack.pop()!;
-      this.pickCardAnimation = true;
+    if (!this.game.pickCardAnimation) {
+      this.game.currentCard = this.game.stack.pop()!;
+      this.game.pickCardAnimation = true;
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length; // modulo Bsp. 3:3 dann Restwert 0
     }
     setTimeout(() => {
-      this.pickCardAnimation = false;
-      this.game.playedCards.push(this.currentCard);
+      this.game.pickCardAnimation = false;
+      this.game.playedCards.push(this.game.currentCard);
     }, 1000);
   }
 
@@ -111,6 +112,7 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.gameService.saveGame(this.game, this.id);
       }
     });
   }
