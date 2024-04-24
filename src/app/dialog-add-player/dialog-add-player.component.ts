@@ -37,9 +37,9 @@ export class DialogAddPlayerComponent {
   name: string = '';
 
 
-
   onNoClick() {
     this.dialogRef.close();
   }
 
+  
 }

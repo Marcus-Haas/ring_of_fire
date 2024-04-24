@@ -25,6 +25,8 @@ export class Game {
             stack: this.stack,
             playedCards: this.playedCards,
             currentPlayer: this.currentPlayer,
+            pickCardAnimation: this.pickCardAnimation,
+            currentCard: this.currentCard
         };
     }
 
