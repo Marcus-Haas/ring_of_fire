@@ -11,6 +11,7 @@ import { GameInfoComponent } from '../game-info/game-info.component';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../firebase-service/game-service.service';
+import { PlayerMobileComponent } from '../player-mobile/player-mobile.component';
 
 
 
@@ -23,6 +24,7 @@ import { GameService } from '../firebase-service/game-service.service';
   standalone: true,
   imports: [CommonModule,
     PlayerComponent,
+    PlayerMobileComponent,
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
