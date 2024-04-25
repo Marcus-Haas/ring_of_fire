@@ -42,6 +42,7 @@ export class GameService {
         game.currentPlayer = gameData['currentPlayer'];
         game.currentCard = gameData['currentCard'];
         game.pickCardAnimation = gameData['pickCardAnimation'];
+        game.player_image = gameData['player_image'];
       }
     });
   }

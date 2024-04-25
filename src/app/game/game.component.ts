@@ -6,12 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { GameService } from '../firebase-service/game-service.service';
 import { PlayerMobileComponent } from '../player-mobile/player-mobile.component';
+import { EditProfileComponent } from '../edit-profile/edit-profile.component';
+import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 
 
 
@@ -79,10 +80,28 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.length > 0) {
         this.game.players.push(name);
+        this.game.player_image.push('monkey.png');
         this.gameService.saveGame(this.game, this.id);
       }
     });
   }
 
+
+  editProfile(playerId: number): void {
+    const dialogRef = this.dialog.open(EditProfileComponent);
+    console.log(playerId);
+    dialogRef.afterClosed().subscribe(change => {
+      console.log('receive', change);
+      if (change) {
+        if (change == 'delete') {
+          this.game.player_image.splice(playerId, 1);
+          this.game.players.splice(playerId, 1);
+        } else {
+          this.game.player_image[playerId] = change;
+        }
+        this.gameService.saveGame(this.game, this.id);
+      }
+    });
+  }
 
 }

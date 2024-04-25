@@ -1,6 +1,7 @@
 @for (player of game.players; track $index) {
-<app-player [playerActive]="$index == game.currentPlayer" [name]="player" [ngStyle]="{'top.px': 100 + ($index * 90)}"
-    class="player-position hide-on-mobile"></app-player>
+<app-player [playerActive]="$index == game.currentPlayer" [image]="game.player_image[$index]" [name]="player"
+    [ngStyle]="{'top.px': 100 + ($index * 90)}" class="player-position hide-on-mobile"
+    (click)="editProfile($index)"></app-player>
 }
 
 <div class="scroll-container hide-on-desktop">

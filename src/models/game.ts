@@ -1,5 +1,7 @@
 export class Game {
 
+    public player_image: string[] = [];
+
     public currentCard: string = '';
     public pickCardAnimation = false;
 
@@ -27,7 +29,8 @@ export class Game {
             playedCards: this.playedCards,
             currentPlayer: this.currentPlayer,
             pickCardAnimation: this.pickCardAnimation,
-            currentCard: this.currentCard
+            currentCard: this.currentCard,
+            player_image: this.player_image
         };
     }
 
