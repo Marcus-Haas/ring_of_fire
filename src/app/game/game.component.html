@@ -1,15 +1,19 @@
 @for (player of game.players; track $index) {
 <app-player [playerActive]="$index == game.currentPlayer" [image]="game.player_image[$index]" [name]="player"
-    [ngStyle]="{'top.px': 100 + ($index * 90)}" class="player-position hide-on-mobile"
-    (click)="editProfile($index)"></app-player>
+    [ngStyle]="{'top.px': 100 + ($index * 90)}" (click)="editProfile($index)"
+    class="player-position hide-on-mobile"></app-player>
 }
 
 <div class="scroll-container hide-on-desktop">
     @for (player of game.players; track $index) {
-    <app-player-mobile [playerActive]="$index == game.currentPlayer" [name]="player"></app-player-mobile>
+    <app-player-mobile [playerActive]="$index == game.currentPlayer" [image]="game.player_image[$index]" [name]="player"
+        (click)="editProfile($index)"></app-player-mobile>
     }
 </div>
 
+<div *ngIf="gameOver" class="game-over">
+    <img src="assets/img/game-over.jpg" alt="">
+</div>
 
 
 <div class="board">
@@ -28,8 +32,8 @@
     </div>
 </div>
 
-<app-game-info [card]="game.currentCard" class="card-position"></app-game-info>
+<app-game-info *ngIf="!gameOver" [card]="game.currentCard" class="card-position"></app-game-info>
 
-<button mat-fab color="primary" (click)="openDialog()" class="add-btn">
+<button *ngIf="!gameOver" mat-fab color="primary" (click)="openDialog()" class="add-btn">
     <mat-icon>add</mat-icon>
 </button>

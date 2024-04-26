@@ -11,5 +11,6 @@ export class PlayerMobileComponent {
 
   @Input() name: string = '';
   @Input() playerActive: boolean = false;
+  @Input() image: string = '';
 
 }
